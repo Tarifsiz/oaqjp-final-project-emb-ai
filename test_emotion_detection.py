@@ -1,7 +1,8 @@
 from emotion_detection import emotion_detector
 import json
 
-test_text = "I love this new technology."
+# test_text = "I love this new technology."
+test_text = "I am so happy I am doing this."
 
 print(f"Analyzing text: '{test_text}'...\n")
 

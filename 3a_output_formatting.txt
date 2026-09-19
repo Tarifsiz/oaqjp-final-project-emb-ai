@@ -20,7 +20,7 @@ def emotion_detector(text_to_analyze):
         if response.status_code == 200:
 
             formatted_response = response.json()
-
+            
             emotion_predictions = formatted_response['emotionPredictions'][0]['emotion']
             
             anger_score = emotion_predictions['anger']
@@ -55,3 +55,4 @@ def emotion_detector(text_to_analyze):
             
     except requests.exceptions.RequestException as e:
         return f"Connection error: {e}"
+
