@@ -1,19 +1,18 @@
 import requests
-import json
 
-def emotion_detector(text_to_analyze):
+def emotion_detector(text_to_analyse):
     url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
-    
+
     headers = {
         "grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"
     }
 
     payload = {
         "raw_document": {
-            "text": text_to_analyze
+            "text": text_to_analyse
         }
     }
-    
+
     try:
         response = requests.post(url, json=payload, headers=headers)
 
@@ -30,13 +29,13 @@ def emotion_detector(text_to_analyze):
         elif response.status_code == 200:
             formatted_response = response.json()
             emotion_predictions = formatted_response['emotionPredictions'][0]['emotion']
-            
+
             anger_score = emotion_predictions['anger']
             disgust_score = emotion_predictions['disgust']
             fear_score = emotion_predictions['fear']
             joy_score = emotion_predictions['joy']
             sadness_score = emotion_predictions['sadness']
-            
+
             emotions_dict = {
                 'anger': anger_score,
                 'disgust': disgust_score,
@@ -44,9 +43,9 @@ def emotion_detector(text_to_analyze):
                 'joy': joy_score,
                 'sadness': sadness_score
             }
-            
+
             dominant_emotion = max(emotions_dict, key=emotions_dict.get)
-            
+
             return {
                 'anger': anger_score,
                 'disgust': disgust_score,
@@ -55,9 +54,9 @@ def emotion_detector(text_to_analyze):
                 'sadness': sadness_score,
                 'dominant_emotion': dominant_emotion
             }
-            
+
         else:
             return {"error": f"Status code {response.status_code}"}
-            
+
     except requests.exceptions.RequestException as e:
         return {"error": str(e)}
